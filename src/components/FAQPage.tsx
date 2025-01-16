@@ -11,7 +11,7 @@ import {
   Collapse
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { questions } from '../data/questions';
+import faqData from '../data/faq.json';
 
 const FAQPage: React.FC = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
@@ -29,18 +29,18 @@ const FAQPage: React.FC = () => {
       <Box display="flex" gap={4}>
         {/* 左侧问题列表 */}
         <Box flex={1}>
-          <List component={Paper} elevation={2}>
-            {questions.map((q) => (
+          <List component={Paper} elevation={2} sx={{ maxHeight: '600px', overflow: 'auto' }}>
+            {faqData.questions.map((q) => (
               <React.Fragment key={q.id}>
                 <ListItem disablePadding>
                   <ListItemButton onClick={() => handleQuestionClick(q.id)}>
-                    <ListItemText primary={q.question} />
+                    <ListItemText primary={q.question} sx={{fontSize: '1.6rem'}} />
                     {selectedQuestion === q.id ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                 </ListItem>
                 <Collapse in={selectedQuestion === q.id} timeout="auto" unmountOnExit>
                   <Box sx={{ p: 2, bgcolor: 'grey.50' }}>
-                    <Typography>{q.answer}</Typography>
+                    <Typography sx={{fontSize: '1.6rem', lineHeight: '2.8rem'}}>{q.answer}</Typography>
                   </Box>
                 </Collapse>
               </React.Fragment>
@@ -60,7 +60,7 @@ const FAQPage: React.FC = () => {
                 minHeight: '400px',
                 bgcolor: 'black'
               }}
-              src={'/assets/video/q1.nurse.mp4' || questions.find(q => q.id === selectedQuestion)?.videoUrl}
+              src={faqData.questions.find(q => q.id === selectedQuestion)?.videoUrl}
               autoPlay
             />
           ) : (
