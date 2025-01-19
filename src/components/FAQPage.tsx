@@ -8,13 +8,16 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Collapse
+  Collapse,
+  ListItemIcon
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import faqData from '../data/faq.json';
+// import zpqData from '../data/zpq.json';
 
 const FAQPage: React.FC = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
+  const questions = faqData.questions;
 
   const handleQuestionClick = (id: number) => {
     setSelectedQuestion(selectedQuestion === id ? null : id);
@@ -22,25 +25,30 @@ const FAQPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        患者住院常问问题
+      <Typography variant="h4" component="h1" gutterBottom sx={{textAlign: 'center'}}>
+        呼吸科住培生入科教育
       </Typography>
       
       <Box display="flex" gap={4}>
         {/* 左侧问题列表 */}
         <Box flex={1}>
           <List component={Paper} elevation={2} sx={{ maxHeight: '600px', overflow: 'auto' }}>
-            {faqData.questions.map((q) => (
+            {questions.map((q) => (
               <React.Fragment key={q.id}>
                 <ListItem disablePadding>
                   <ListItemButton onClick={() => handleQuestionClick(q.id)}>
-                    <ListItemText primary={q.question} sx={{fontSize: '1.6rem'}} />
+                  <ListItemIcon sx={{ fontSize: 20 }}>🔍</ListItemIcon>
+                    <ListItemText primary={q.question} primaryTypographyProps={{
+                      fontSize: '1.4rem',
+                      fontWeight: 'medium',
+                      letterSpacing: 0,
+                    }}/>
                     {selectedQuestion === q.id ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                 </ListItem>
                 <Collapse in={selectedQuestion === q.id} timeout="auto" unmountOnExit>
                   <Box sx={{ p: 2, bgcolor: 'grey.50' }}>
-                    <Typography sx={{fontSize: '1.6rem', lineHeight: '2.8rem'}}>{q.answer}</Typography>
+                    <Typography sx={{fontSize: '1.2rem', lineHeight: '2.4rem'}}>{q.answer}</Typography>
                   </Box>
                 </Collapse>
               </React.Fragment>
@@ -60,7 +68,7 @@ const FAQPage: React.FC = () => {
                 minHeight: '400px',
                 bgcolor: 'black'
               }}
-              src={faqData.questions.find(q => q.id === selectedQuestion)?.videoUrl}
+              src={questions.find(q => q.id === selectedQuestion)?.videoUrl}
               autoPlay
             />
           ) : (
