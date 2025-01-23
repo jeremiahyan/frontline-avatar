@@ -12,12 +12,12 @@ import {
   ListItemIcon
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import faqData from '../data/faq.json';
-// import zpqData from '../data/zpq.json';
+// import faqData from '../data/faq.json';
+import zpqData from '../data/zpq.json';
 
 const FAQPage: React.FC = () => {
   const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
-  const questions = faqData.questions;
+  const questions = zpqData.questions;
 
   const handleQuestionClick = (id: number) => {
     setSelectedQuestion(selectedQuestion === id ? null : id);
