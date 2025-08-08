@@ -173,3 +173,78 @@ vendors/
 - 当前FAQ视频存储在 `public/assets/video/` 目录 / Current FAQ videos are stored in `public/assets/video/` directory
 - MuseTalk生成的新视频可复制到上述目录供React应用使用 / MuseTalk-generated videos can be copied to the above directory for React app usage
 - 音频文件存储在 `vendors/MuseTalk/data/voice/` 和 `data/audio/` / Audio files stored in `vendors/MuseTalk/data/voice/` and `data/audio/`
+
+## Task Management Workflow / 任务管理流程
+
+**MANDATORY 5-STEP WORKFLOW / 强制性5步工作流程**
+
+When completing any significant task or milestone in frontline-avatar, **MUST** follow:
+
+**Step 1: Update task status / 第1步：更新任务状态**
+- Use TodoWrite tool to mark task as "completed"
+
+**Step 2: Update tasks.md / 第2步：更新tasks.md**
+- Edit `.kiro/specs/frontline-avatar/*/tasks.md` if exists
+- Change `- [ ]` to `- [x]` for completed items
+
+**Step 3: Call docs-engineer agent / 第3步：调用文档工程师**
+- Update `frontline-avatar/CHANGELOG.md` and `frontline-avatar/README.md`
+- Document virtual avatar improvements and React component changes
+- Record MuseTalk integration updates
+
+**Step 4: Call tech-doc-secretary agent (if applicable) / 第4步：调用技术书记员**
+- Document technical decisions in `frontline-avatar/docs/technical-decisions/`
+- Record virtual avatar generation strategies, React architecture choices, etc.
+
+**Step 5: 双层Git提交 / 第5步：Dual-Layer Git Commit**
+
+**⚠️ CRITICAL: 作为主项目的子项目，需要双层提交流程**
+
+- **5.1 frontline-avatar子项目提交 / Subproject Commit FIRST**:
+  ```bash
+  # 在 frontline-avatar 目录中提交
+  git add .
+  git commit -m "feat: Complete [specific virtual avatar feature]
+  
+  [详细描述实现的虚拟助手功能、React组件改进、MuseTalk集成等]
+  - React FAQ组件开发和用户界面优化
+  - MuseTalk虚拟形象生成和唇形同步改进
+  - 医学FAQ数据和视频内容更新
+  - 虚拟助手交互逻辑和用户体验提升
+  - TypeScript类型定义和组件架构优化
+  
+  🤖 Generated with [Claude Code](https://claude.ai/code)
+  Co-Authored-By: Claude <noreply@anthropic.com>"
+  ```
+
+- **5.2 返回主项目更新子模块 / Return to Main Project SECOND**:
+  ```bash
+  # 返回主项目根目录
+  cd ..
+  git add frontline-avatar  # 暂存子项目更新
+  git commit -m "chore: Update frontline-avatar submodule with [virtual avatar milestone]
+  
+  更新frontline-avatar子模块，包含[具体虚拟助手功能]的完整实现
+  虚拟助手更新内容包括界面优化、MuseTalk集成、FAQ内容等
+  
+  🤖 Generated with [Claude Code](https://claude.ai/code)
+  Co-Authored-By: Claude <noreply@anthropic.com>"
+  ```
+
+**提交顺序要求**:
+1. 必须先在frontline-avatar中提交虚拟助手代码更改
+2. 然后回到主项目提交子模块更新
+3. 确保主项目能正确跟踪frontline-avatar的版本
+4. 特别注意vendors/MuseTalk目录的更新
+
+**🚨 This 5-step workflow is MANDATORY and ensures virtual avatar changes are properly documented.**
+
+## Important Notes / 重要注意事项
+
+1. **Node版本**: 需要 Node.js >= 16.0.0 / Requires Node.js >= 16.0.0
+2. **Python环境**: MuseTalk需要 Python 3.10+ 和 CUDA 11.7 / MuseTalk requires Python 3.10+ and CUDA 11.7
+3. **端口配置**: 开发服务器运行在端口3050 / Development server runs on port 3050
+4. **数据切换**: 可在FAQPage.tsx中切换FAQ数据源 / Can switch FAQ data sources in FAQPage.tsx
+5. **虚拟形象生成**: 需要下载完整的MuseTalk模型权重 / Requires complete MuseTalk model weights download
+6. **视频存储**: 生成的视频需要手动复制到public目录 / Generated videos need manual copy to public directory
+7. **多语言支持**: MuseTalk支持中英日等多语言音频 / MuseTalk supports multilingual audio (Chinese, English, Japanese)
